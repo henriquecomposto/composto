@@ -15,15 +15,17 @@ Legenda: `[ ]` a fazer · `[~]` em andamento · `[x]` feito
 
 ## Fase 1: Supabase
 
-- [ ] Criar conta e projeto no Supabase cloud (escolher região próxima, ex.: São Paulo)
-- [ ] Copiar URL e chaves para o `.env`
+- [x] Criar conta e projeto no Supabase cloud: "composto", região São Paulo / sa-east-1 (2026-11-19)
+- [ ] Apagar o projeto antigo "o grande composto" (us-east-2)
+- [x] Fazer login na CLI do Supabase no computador (2026-11-19)
+- [x] Copiar URL e chaves para o `.env` e testar a conexão (2026-11-19)
 
 ## Fase 2: Projeto Next.js
 
-- [ ] Decidir as opções de criação (App Router, Tailwind CSS, ESLint, gerenciador de pacotes)
-- [ ] Criar o app Next.js (`create-next-app`)
-- [ ] Rodar localmente e conferir que abre no navegador
-- [ ] Instalar e configurar os clientes do Supabase (`@supabase/supabase-js`, `@supabase/ssr`)
+- [x] Decidir as opções de criação: JavaScript, App Router, Tailwind CSS, ESLint, pasta `src/`, npm (2026-11-19)
+- [x] Criar o app Next.js (`create-next-app`): Next 16.4, React 19.3, Tailwind 4.3 (2026-11-19)
+- [x] Rodar localmente e conferir que abre no navegador (2026-11-19)
+- [x] Instalar e configurar os clientes do Supabase (`@supabase/supabase-js`, `@supabase/ssr`) e o `proxy` de sessão; conexão testada (2026-11-19)
 
 ## Fase 3: Autenticação
 

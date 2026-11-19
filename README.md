@@ -27,11 +27,41 @@ Webapp full stack em JavaScript, construído com Next.js (React + Node.js) e Sup
 ## Configuração do ambiente
 
 1. Clone o repositório.
-2. Preencha o arquivo `.env` na raiz com as chaves do seu projeto Supabase
-   (painel do Supabase → **Project Settings → API**).
-3. Instale as dependências e rode o projeto (comandos serão adicionados quando o app Next.js for criado).
+2. Crie o arquivo `.env` na raiz com as chaves do projeto Supabase
+   (painel do Supabase → **Project Settings → API Keys**):
+   `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`.
+3. Instale as dependências:
+   ```bash
+   npm install
+   ```
+4. Rode o projeto e abra http://localhost:3000 no navegador:
+   ```bash
+   npm run dev
+   ```
 
 > **Nunca** envie o `.env` para o GitHub: ele contém chaves secretas.
+
+## Comandos
+
+| Comando | O que faz |
+|---|---|
+| `npm run dev` | Roda o app em modo de desenvolvimento (http://localhost:3000) |
+| `npm run build` | Gera a versão de produção |
+| `npm run start` | Roda a versão de produção (depois do build) |
+| `npm run lint` | Verifica problemas no código |
+
+## Estrutura de pastas
+
+```
+src/
+├── app/                 # Páginas e rotas (App Router)
+├── lib/supabase/
+│   ├── client.js        # Supabase no navegador
+│   ├── server.js        # Supabase no servidor
+│   └── proxy.js         # Renovação da sessão
+└── proxy.js             # Roda antes de cada página (antigo "middleware")
+public/                  # Imagens e arquivos estáticos
+```
 
 ## Documentação do projeto
 
