@@ -1,0 +1,46 @@
+# ---------- Variáveis de ambiente (segredos) ----------
+.env
+.env*.local
+.env.*
+!.env.example
+
+# ---------- Dependências ----------
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+
+# ---------- Next.js / build ----------
+/.next/
+/out/
+/build
+next-env.d.ts
+*.tsbuildinfo
+
+# ---------- Testes ----------
+/coverage
+
+# ---------- Logs ----------
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# ---------- Deploy ----------
+.vercel
+
+# ---------- Supabase CLI (local) ----------
+supabase/.branches
+supabase/.temp
+
+# ---------- Sistema operacional / editores ----------
+.DS_Store
+Thumbs.db
+*.pem
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# ---------- Claude Code (configurações pessoais) ----------
+.claude/settings.local.json

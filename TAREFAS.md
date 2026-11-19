@@ -10,8 +10,8 @@ Legenda: `[ ]` a fazer · `[~]` em andamento · `[x]` feito
 - [x] Limpar o histórico antigo do repositório (2026-11-19)
 - [x] Definir a stack: JavaScript, Next.js, Supabase cloud (2026-11-19)
 - [x] Criar a documentação inicial: README.md, CLAUDE.md, .env, TAREFAS.md (2026-11-19)
-- [ ] Criar o `.gitignore` (proteger `.env`, `node_modules`, `.next`, `.DS_Store`)
-- [ ] Primeiro commit da documentação e push para o GitHub
+- [x] Criar o `.gitignore` (proteger `.env`, `node_modules`, `.next`, `.DS_Store`) (2026-11-19)
+- [x] Primeiro commit da documentação e push para o GitHub (2026-11-19)
 
 ## Fase 1: Supabase
 
