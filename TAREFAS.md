@@ -4,6 +4,15 @@ Legenda: `[ ]` a fazer · `[~]` em andamento · `[x]` feito
 
 > Consultar este arquivo antes de cada etapa. Atualizar ao iniciar e ao concluir tarefas.
 
+## Onde paramos
+
+_Atualizado em 2026-11-19._
+
+- **Última entrega:** versão `v0.1.0` publicada no GitHub (fundação: Fases 0 a 2) e regras de gestão conjunta registradas no CLAUDE.md.
+- **Pela metade:** nada.
+- **Próximo passo:** Fase 3, começando por definir os métodos de login (decisão do usuário).
+- **Pendência paralela:** apagar o projeto antigo "o grande composto" no Supabase.
+
 ## Fase 0: Preparação
 
 - [x] Instalar Git, Node.js e GitHub Desktop (2026-11-19)
@@ -31,7 +40,7 @@ Legenda: `[ ]` a fazer · `[~]` em andamento · `[x]` feito
 
 - [x] Adotar Versionamento Semântico (SemVer) e criar o `CHANGELOG.md` (2026-11-19)
 - [x] Publicar a tag `v0.1.0` no GitHub (2026-11-19)
-- [ ] Criar a release `v0.1.0` na página do GitHub com as notas da versão
+- [x] Criar a release `v0.1.0` na página do GitHub com as notas da versão (2026-11-19)
 
 ## Fase 3: Autenticação
 
@@ -41,7 +50,7 @@ Legenda: `[ ]` a fazer · `[~]` em andamento · `[x]` feito
 
 ## Fase 4: Banco de dados
 
-- [ ] Modelar as primeiras tabelas
+- [ ] Modelar as primeiras tabelas (sempre via migrations em `supabase/migrations/`)
 - [ ] Habilitar RLS e criar as políticas de acesso
 
 ## Fase 5: Storage

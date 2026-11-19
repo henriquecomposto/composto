@@ -47,6 +47,7 @@ Contexto e regras para o Claude Code trabalhar neste repositório.
 | 2026-11-19 | Projeto Supabase "composto" criado na região São Paulo (sa-east-1), pela menor latência para usuários no Brasil. Substitui o primeiro projeto ("o grande composto", us-east-2), que deve ser apagado. |
 | 2026-11-19 | Next.js com Tailwind CSS e código dentro da pasta `src/`. |
 | 2026-11-19 | Versionamento Semântico (SemVer): tag `vX.Y.Z` + release no GitHub + entrada no `CHANGELOG.md` + `version` no `package.json`, sempre juntos. Primeira versão: `v0.1.0` (fundação: Fases 0 a 2). |
+| 2026-11-19 | Gestão conjunta: Claude cuida da parte mecânica (versões, commits, documentação); o usuário decide quando publicar versões, aprova ações sem volta e as decisões de produto. Regras na seção "Gestão conjunta". |
 
 Adicione novas decisões nesta tabela conforme forem tomadas.
 
@@ -66,7 +67,24 @@ Adicione novas decisões nesta tabela conforme forem tomadas.
 - `SUPABASE_SECRET_KEY` só pode ser usada em código de servidor.
 - Toda tabela no Supabase deve ter **RLS (Row Level Security)** habilitado.
 
+## Versões e releases
+
+- Seguir o Versionamento Semântico (ver seção "Versionamento" do README.md).
+- **Ao concluir uma fase do TAREFAS.md**, propor ao usuário uma nova versão: número sugerido, rascunho das notas da release e o motivo.
+- **Só publicar com o "ok" explícito do usuário.** Quem decide quando uma versão sai é o usuário.
+- Ao publicar, fazer tudo junto: entrada no `CHANGELOG.md`, `version` no `package.json`, commit, tag anotada `vX.Y.Z`, push e o texto da release no GitHub.
+- Antes de marcar uma versão, rodar `npm run build` e `npm run lint`; não versionar com erro.
+- Versões `0.x` são publicadas como *pre-release* no GitHub.
+
 ## Convenções de trabalho
 
 - Commits e pushes só quando o usuário pedir.
 - Explicar os passos de forma clara: o usuário está montando o ambiente pela primeira vez.
+
+### Gestão conjunta (usuário + Claude)
+
+1. **Registrar onde paramos.** Ao fim de cada sessão (ou antes de um `/clear`), atualizar a seção "Onde paramos" do TAREFAS.md: o que ficou pela metade e qual é o próximo passo. O Claude não lembra das conversas anteriores; a continuidade depende desse registro.
+2. **Confirmar antes de ações sem volta.** Antes de apagar dados, alterar o banco em produção, fazer deploy ou mudar configurações no painel do Supabase, explicar o que vai acontecer e o impacto, e esperar o "ok" do usuário.
+3. **Banco de dados só por migrations.** Toda mudança de estrutura no banco (tabelas, colunas, políticas RLS) vira um arquivo em `supabase/migrations/`, versionado no Git. Nada de alterar a estrutura direto pelo painel do Supabase.
+4. **"Como conferir" ao fim de cada entrega.** Terminar cada tarefa explicando, em linguagem simples, como o usuário testa no navegador o que foi feito.
+5. **Decisões de produto são do usuário.** Textos, fluxos e o que o usuário final vê: perguntar em vez de escolher sozinho. Decisões técnicas: o Claude decide e explica o porquê.
