@@ -46,6 +46,7 @@ Contexto e regras para o Claude Code trabalhar neste repositório.
 | 2026-11-19 | Documentar o processo antes de codar: README.md, CLAUDE.md, .env e TAREFAS.md. |
 | 2026-11-19 | Projeto Supabase "composto" criado na região São Paulo (sa-east-1), pela menor latência para usuários no Brasil. Substitui o primeiro projeto ("o grande composto", us-east-2), que deve ser apagado. |
 | 2026-11-19 | Next.js com Tailwind CSS e código dentro da pasta `src/`. |
+| 2026-11-19 | Versionamento Semântico (SemVer): tag `vX.Y.Z` + release no GitHub + entrada no `CHANGELOG.md` + `version` no `package.json`, sempre juntos. Primeira versão: `v0.1.0` (fundação: Fases 0 a 2). |
 
 Adicione novas decisões nesta tabela conforme forem tomadas.
 

@@ -27,6 +27,12 @@ Legenda: `[ ]` a fazer · `[~]` em andamento · `[x]` feito
 - [x] Rodar localmente e conferir que abre no navegador (2026-11-19)
 - [x] Instalar e configurar os clientes do Supabase (`@supabase/supabase-js`, `@supabase/ssr`) e o `proxy` de sessão; conexão testada (2026-11-19)
 
+## Versionamento
+
+- [x] Adotar Versionamento Semântico (SemVer) e criar o `CHANGELOG.md` (2026-11-19)
+- [x] Publicar a tag `v0.1.0` no GitHub (2026-11-19)
+- [ ] Criar a release `v0.1.0` na página do GitHub com as notas da versão
+
 ## Fase 3: Autenticação
 
 - [ ] Definir os métodos de login (e-mail/senha, magic link, Google…)

@@ -63,7 +63,18 @@ src/
 public/                  # Imagens e arquivos estáticos
 ```
 
+## Versionamento
+
+O projeto segue o [Versionamento Semântico](https://semver.org/lang/pt-BR/) (`MAIOR.MENOR.CORREÇÃO`):
+
+- **CORREÇÃO** (`0.1.1`): correções de erros, sem funcionalidade nova.
+- **MENOR** (`0.2.0`): funcionalidades novas.
+- **MAIOR** (`1.0.0`): mudanças que quebram compatibilidade. A `1.0.0` marcará a primeira versão pronta para uso real.
+
+Cada versão tem uma tag no Git (`v0.1.0`, `v0.2.0`…), uma release no GitHub e uma entrada no [CHANGELOG.md](CHANGELOG.md). A versão atual também fica no campo `version` do `package.json`.
+
 ## Documentação do projeto
 
 - [CLAUDE.md](CLAUDE.md): contexto, decisões e regras de trabalho para o Claude Code
 - [TAREFAS.md](TAREFAS.md): lista de etapas (feitas, em andamento e próximas)
+- [CHANGELOG.md](CHANGELOG.md): histórico de versões e notas de cada release
