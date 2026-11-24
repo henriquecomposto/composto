@@ -8,8 +8,10 @@ Este guia é para pessoas: o Claude Code não carrega este arquivo sozinho. As r
 .claude/
 ├── README.md              este guia
 ├── skills/                receitas acionadas com /nome
-│   ├── versao/SKILL.md    /versao   → prepara e publica uma versão
-│   └── encerrar/SKILL.md  /encerrar → registra "Onde paramos" no TAREFAS.md
+│   ├── versao/SKILL.md       /versao      → prepara e publica uma versão
+│   ├── encerrar/SKILL.md     /encerrar    → registra "Onde paramos" no TAREFAS.md
+│   ├── devops/SKILL.md       /devops      → chama o subagent devops
+│   └── verificador/SKILL.md  /verificador → chama o subagent verificador
 ├── agents/                ajudantes (subagents) que trabalham à parte
 │   ├── verificador.md     roda lint e build e devolve só o resumo (só lê)
 │   └── devops.md          cuida da infraestrutura (Supabase, deploy, dependências)
@@ -32,8 +34,12 @@ Este guia é para pessoas: o Claude Code não carrega este arquivo sozinho. As r
 |---|---|
 | Uma fase terminou e você quer lançar uma versão | `/versao` (ou `/versao minor`, `/versao 0.2.0`) |
 | Vai fechar o Claude Code ou dar `/clear` | `/encerrar` |
+| Precisa de algo de infraestrutura | `/devops <pedido>` (ex.: `/devops cria a migration da tabela de perfis`) |
+| Quer conferir se o código está saudável | `/verificador` |
 
-O `verificador` não precisa ser chamado: a `/versao` usa ele. Também dá para pedir "roda o verificador".
+O `/devops` e o `/verificador` rodam o subagent à parte: ele **não vê a conversa**, então escreva no pedido tudo o que ele precisa saber. Ações sem volta (ex.: aplicar migration no banco) só acontecem se o pedido trouxer o seu "ok"; senão, ele devolve o plano.
+
+Também continua valendo pedir em texto livre ("pede para o devops…", "roda o verificador"): aí a conversa principal chama o subagent e já passa o contexto. A `/versao` usa o verificador sozinha.
 
 ### Quem faz o quê
 
