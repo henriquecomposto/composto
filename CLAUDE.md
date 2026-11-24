@@ -10,9 +10,8 @@ Contexto e regras para o Claude Code trabalhar neste repositório.
 
 **Sempre consulte [TAREFAS.md](TAREFAS.md) antes de começar qualquer trabalho** para checar o que já foi feito e o que vem a seguir.
 
-- Ao iniciar uma tarefa, marque-a como em andamento (`[~]`).
-- Ao concluir, marque como feita (`[x]`) e registre a data.
-- Se surgir trabalho novo, adicione-o à lista antes de executá-lo.
+- A lista tem só entregas (uma tela, uma tabela, um deploy), trabalho de mais de uma sessão ou o que depende de decisão do usuário. Ajustes pequenos não entram: ficam na mensagem do commit.
+- Ao iniciar uma tarefa da lista, marque `[~]`; ao concluir, `[x]` com a data. Fase concluída vira uma linha em "Concluído".
 - Não pule etapas sem combinar com o usuário.
 
 ## Sobre o projeto
@@ -37,19 +36,10 @@ Contexto e regras para o Claude Code trabalhar neste repositório.
 - **Git + GitHub**, usado pelo usuário via GitHub Desktop
   - Repositório: `github.com/henriquecomposto/composto`, branch principal `main`
 
-## Registro de decisões
+## Decisões
 
-| Data | Decisão |
-|---|---|
-| 2026-11-19 | Histórico antigo do repositório apagado; projeto recomeçado do zero. |
-| 2026-11-19 | Stack definida: JavaScript + Next.js (React/Node) + Supabase cloud (auth, banco, storage). |
-| 2026-11-19 | Documentar o processo antes de codar: README.md, CLAUDE.md, .env e TAREFAS.md. |
-| 2026-11-19 | Projeto Supabase "composto" criado na região São Paulo (sa-east-1), pela menor latência para usuários no Brasil. Substitui o primeiro projeto ("o grande composto", us-east-2), que deve ser apagado. |
-| 2026-11-19 | Next.js com Tailwind CSS e código dentro da pasta `src/`. |
-| 2026-11-19 | Versionamento Semântico (SemVer): tag `vX.Y.Z` + release no GitHub + entrada no `CHANGELOG.md` + `version` no `package.json`, sempre juntos. Primeira versão: `v0.1.0` (fundação: Fases 0 a 2). |
-| 2026-11-19 | Gestão conjunta: Claude cuida da parte mecânica (versões, commits, documentação); o usuário decide quando publicar versões, aprova ações sem volta e as decisões de produto. Regras na seção "Gestão conjunta". |
-
-Adicione novas decisões nesta tabela conforme forem tomadas.
+- Histórico em [DECISOES.md](DECISOES.md) (não é carregado automaticamente; ler só quando precisar do porquê de algo).
+- Registrar lá só decisões de produto ou de arquitetura, com o porquê. Regra nova em vigor também entra aqui no CLAUDE.md.
 
 ## Código: onde fica cada coisa
 
@@ -69,12 +59,14 @@ Adicione novas decisões nesta tabela conforme forem tomadas.
 
 ## Versões e releases
 
-- Seguir o Versionamento Semântico (ver seção "Versionamento" do README.md).
-- **Ao concluir uma fase do TAREFAS.md**, propor ao usuário uma nova versão: número sugerido, rascunho das notas da release e o motivo.
-- **Só publicar com o "ok" explícito do usuário.** Quem decide quando uma versão sai é o usuário.
-- Ao publicar, fazer tudo junto: entrada no `CHANGELOG.md`, `version` no `package.json`, commit, tag anotada `vX.Y.Z`, push e o texto da release no GitHub.
-- Antes de marcar uma versão, rodar `npm run build` e `npm run lint`; não versionar com erro.
-- Versões `0.x` são publicadas como *pre-release* no GitHub.
+- Versionamento Semântico. O passo a passo completo está na skill `/versao`.
+- **Ao concluir uma fase do TAREFAS.md**, sugerir ao usuário rodar `/versao`. Só publicar com o "ok" explícito dele.
+
+## Skills e subagents
+
+- Skills em `.claude/skills/`, subagents em `.claude/agents/`. Antes de criar ou alterar um deles, ler as convenções em `.claude/README.md`.
+- Para conferir lint e build, usar o subagent `verificador` (a saída longa fica fora da conversa).
+- Infraestrutura (Supabase, migrations, deploy, dependências, configuração do projeto): delegar ao subagent `devops`. Código do app (`src/`) fica na conversa principal.
 
 ## Convenções de trabalho
 
@@ -83,7 +75,7 @@ Adicione novas decisões nesta tabela conforme forem tomadas.
 
 ### Gestão conjunta (usuário + Claude)
 
-1. **Registrar onde paramos.** Ao fim de cada sessão (ou antes de um `/clear`), atualizar a seção "Onde paramos" do TAREFAS.md: o que ficou pela metade e qual é o próximo passo. O Claude não lembra das conversas anteriores; a continuidade depende desse registro.
+1. **Registrar onde paramos.** Ao fim de cada sessão (ou antes de um `/clear`), o usuário roda `/encerrar`, que atualiza a seção "Onde paramos" do TAREFAS.md. Se a sessão parecer estar terminando, lembrar o usuário disso. O Claude não lembra das conversas anteriores; a continuidade depende desse registro.
 2. **Confirmar antes de ações sem volta.** Antes de apagar dados, alterar o banco em produção, fazer deploy ou mudar configurações no painel do Supabase, explicar o que vai acontecer e o impacto, e esperar o "ok" do usuário.
 3. **Banco de dados só por migrations.** Toda mudança de estrutura no banco (tabelas, colunas, políticas RLS) vira um arquivo em `supabase/migrations/`, versionado no Git. Nada de alterar a estrutura direto pelo painel do Supabase.
 4. **"Como conferir" ao fim de cada entrega.** Terminar cada tarefa explicando, em linguagem simples, como o usuário testa no navegador o que foi feito.

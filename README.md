@@ -27,9 +27,8 @@ Webapp full stack em JavaScript, construído com Next.js (React + Node.js) e Sup
 ## Configuração do ambiente
 
 1. Clone o repositório.
-2. Crie o arquivo `.env` na raiz com as chaves do projeto Supabase
-   (painel do Supabase → **Project Settings → API Keys**):
-   `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`.
+2. Copie o modelo `.env.example` para um arquivo `.env` na raiz e preencha as chaves
+   do projeto Supabase (painel do Supabase → **Project Settings → API Keys**).
 3. Instale as dependências:
    ```bash
    npm install
