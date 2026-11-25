@@ -12,13 +12,20 @@ Este guia é para pessoas: o Claude Code não carrega este arquivo sozinho. As r
 │   ├── encerrar/SKILL.md     /encerrar    → registra "Onde paramos" no TAREFAS.md
 │   ├── devops/SKILL.md       /devops      → chama o subagent devops
 │   ├── verificador/SKILL.md  /verificador → chama o subagent verificador
-│   └── prompt/SKILL.md       /prompt      → chama o subagent prompt
+│   ├── prompt/SKILL.md       /prompt      → chama o subagent prompt
+│   └── criador/
+│       ├── SKILL.md          /criador     → chama o subagent criador
+│       └── referencia.md     resumo da documentação do Claude Code (evita pesquisar a cada criação)
 ├── agents/                ajudantes (subagents) que trabalham à parte
 │   ├── verificador.md     roda lint e build e devolve só o resumo (só lê)
 │   ├── devops.md          cuida da infraestrutura (Supabase, deploy, dependências)
-│   └── prompt.md          transforma um pedido solto num prompt completo (só lê)
+│   ├── prompt.md          transforma um pedido solto num prompt completo (lê o projeto e pesquisa na internet)
+│   └── criador.md         cria subagents e skills novos seguindo as convenções abaixo
 ├── hooks/
-│   └── devops-protege-src.sh  impede o devops de editar o código do app (src/)
+│   ├── devops-protege-src.sh  impede o devops de editar o código do app (src/)
+│   ├── criador-protege.sh     deixa o criador gravar só em agents/, skills/ e neste README
+│   ├── protege-env.sh         impede que o conteúdo do .env (segredos) entre na conversa
+│   └── pede-confirmacao.sh    pede confirmação antes de git push, supabase db push e de apagar arquivos
 ├── settings.json          permissões do projeto (vai para o Git)
 └── settings.local.json    preferências pessoais, se existir (fora do Git)
 ```
@@ -39,8 +46,9 @@ Este guia é para pessoas: o Claude Code não carrega este arquivo sozinho. As r
 | Precisa de algo de infraestrutura | `/devops <pedido>` (ex.: `/devops cria a migration da tabela de perfis`) |
 | Quer conferir se o código está saudável | `/verificador` |
 | Quer um prompt bem escrito para pedir algo ao Claude Code | `/prompt <pedido>` (ex.: `/prompt quero uma tela de cadastro`) |
+| Quer um agente ou atalho /nome novo | `/criador <pedido>` (ex.: `/criador um agente que revisa os textos das telas`) |
 
-O `/devops`, o `/verificador` e o `/prompt` rodam o subagent à parte: ele **não vê a conversa**, então escreva no pedido tudo o que ele precisa saber. Ações sem volta (ex.: aplicar migration no banco) só acontecem se o pedido trouxer o seu "ok"; senão, ele devolve o plano.
+O `/devops`, o `/verificador`, o `/prompt` e o `/criador` rodam o subagent à parte: ele **não vê a conversa**, então escreva no pedido tudo o que ele precisa saber. Ações sem volta (ex.: aplicar migration no banco) só acontecem se o pedido trouxer o seu "ok"; senão, ele devolve o plano.
 
 Também continua valendo pedir em texto livre ("pede para o devops…", "roda o verificador"): aí a conversa principal chama o subagent e já passa o contexto. A `/versao` usa o verificador sozinha.
 
@@ -50,8 +58,9 @@ Também continua valendo pedir em texto livre ("pede para o devops…", "roda o 
 |---|---|---|
 | Conversa principal | Código do app (`src/`), conversa com você, configuração do Claude Code | — |
 | `verificador` | Roda lint e build e resume o resultado | Não altera nada |
-| `prompt` | Escreve prompts claros para o Claude Code, com arquivos e regras do projeto | Não executa a tarefa, não altera arquivos, não decide produto (lista as dúvidas) |
+| `prompt` | Escreve prompts claros para o Claude Code, com arquivos e regras do projeto; pesquisa na internet quando ajuda | Não executa a tarefa, não altera arquivos, não decide produto (lista as dúvidas) |
 | `devops` | Supabase (migrations, RLS, storage), `.env.example`, dependências, configuração, deploy | Não edita `src/` (bloqueado por hook), não decide produto, não faz ação sem volta sem o seu "ok" |
+| `criador` | Cria subagents e skills novos pelas convenções abaixo, consultando a `referencia.md` (sem internet) | Só grava em `agents/`, `skills/` e neste README (bloqueado por hook); não cria hooks nem permissões, não altera os próprios arquivos nem agentes existentes sem o seu "ok" |
 
 Para usar: "pede para o devops criar a migration de X".
 
@@ -60,6 +69,8 @@ Para usar: "pede para o devops criar a migration de X".
 A pasta `.claude/commands/` é o formato antigo. Hoje as **skills** fazem tudo o que os commands faziam (também viram `/nome`) e ainda podem ter arquivos de apoio. Por isso, aqui só usamos `skills/`.
 
 ## Convenções (para criar novas)
+
+O `/criador` aplica estas regras. A `skills/criador/referencia.md` deve ser revisada a cada 3 meses (a data está no topo); a atualização é feita na conversa principal, com pesquisa na documentação oficial.
 
 **Quando criar**
 - **Skill:** quando um processo se repete e tem passos que não podem ser esquecidos.
@@ -71,6 +82,14 @@ A pasta `.claude/commands/` é o formato antigo. Hoje as **skills** fazem tudo o
 - Skills com `disable-model-invocation: true` não custam nada até você digitar `/nome`. Use isso em tudo que tem efeito colateral (commit, push, publicar): assim o usuário também mantém o controle.
 - O `SKILL.md` deve ter menos de ~60 linhas. Material de consulta longo vai para outro arquivo na mesma pasta, que a skill manda ler só quando precisar.
 - Subagents mecânicos (rodar comandos, resumir saídas) usam `model: haiku` e só as ferramentas necessárias (`tools:`).
+
+**O que o corpo de um subagent precisa ter** (adaptado da aula de criação de agentes)
+1. **Papel e objetivo:** uma ou duas frases — quem ele é e o que conta como boa entrega. Sem backstory ou persona longa: custa tokens e não melhora o resultado.
+2. **O que ler antes:** os arquivos que ele precisa consultar, e só esses.
+3. **Como trabalhar** (para quem executa vários passos ou altera arquivos): conferir o que já existe, planejar a ordem e como desfazer, e o que fazer quando um comando falha (tentar no máximo duas vezes, depois parar e relatar).
+4. **Limites** e **formato de resposta** curto e fixo.
+
+Não dividir uma tarefa em vários subagents: cada um relê o projeto do zero, o que multiplica o custo. Quem orquestra é a conversa principal.
 
 **Nomes:** em português, curtos, uma palavra: `versao`, `encerrar`, `verificador`.
 

@@ -8,7 +8,7 @@ model: haiku
 Você confere a saúde do código do Composto (Next.js). Não corrija nada: só rode e relate.
 
 1. Rode `npm run lint`.
-2. Rode `npm run build`.
+2. Rode `npm run build`, mesmo que o lint tenha falhado: o usuário precisa do resultado dos dois.
 
 Responda em português, no máximo 15 linhas, neste formato:
 
